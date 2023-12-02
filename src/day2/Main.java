@@ -14,14 +14,19 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-        int sum = 0;
+        int sumID = 0;
+        int sumPower = 0;
         while(s.hasNextLine()) {
             String line = s.nextLine();
-            sum += gameIsPossible(line, 12, 13, 14);
+            sumID += gameIsPossible(line, 12, 13, 14);
+            sumPower += gamePower(line);
         }
-        System.out.println(sum);
+        System.out.println(sumID);
+        System.out.println(sumPower);
     }
 
+    // returns the game id if the game is possible
+    // returns 0 otherwise
     private static int gameIsPossible(String s, int red, int green, int blue) {
         s = s.replace(';', ',');
         String[] sc = s.split(":");
@@ -49,5 +54,36 @@ public class Main {
         }
 
         return gameID;
+    }
+
+    // returns the power of a game
+    private static int gamePower(String s) {
+        s = s.replace(';', ',');
+        String[] sc = s.split(":");
+
+        String game = sc[0];
+        String specs = sc[1];
+        String[] grabs = specs.split(",");
+
+        int minRed = 0;
+        int minGreen = 0;
+        int minBlue = 0;
+        for (String g : grabs) {
+            g = g.trim();
+            if (g.contains("red")) {
+                g = g.replace(" red", "");
+                minRed = Math.max(Integer.parseInt(g), minRed);
+            }
+            if (g.contains("green")) {
+                g = g.replace(" green", "");
+                minGreen = Math.max(Integer.parseInt(g), minGreen);
+            }
+            if (g.contains("blue")) {
+                g = g.replace(" blue", "");
+                minBlue = Math.max(Integer.parseInt(g), minBlue);
+            }
+        }
+
+        return minRed * minGreen * minBlue;
     }
 }
