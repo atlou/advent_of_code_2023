@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Main {
+public class Part1 {
     public static void main(String[] args) {
         Scanner s;
         File f = new File("src/day3/input.txt");
@@ -40,17 +40,11 @@ public class Main {
                     }
                     x2 = x;
                 } else {
-                    if(x1 != -1) {
-                        // number just ended
-                        sum += getNumber(x1, x2, y, chars);
-                    }
+                    if(x1 != -1) sum += getNumber(x1, x2, y, chars); // number just ended
                     x1 = -1;
                 }
             }
-            if(x1 != -1) {
-                // number ends with new line
-                sum += getNumber(x1, x2, y, chars);
-            }
+            if(x1 != -1) sum += getNumber(x1, x2, y, chars); // number ends with new line
         }
         System.out.println(sum);
     }
